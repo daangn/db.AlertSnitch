@@ -15,43 +15,43 @@ CREATE TABLE `alert_group` (
 	`group_key` VARCHAR(255) NOT NULL,
 	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	KEY `ix_time` (`time`),
-    KEY `ix_status_time` (`status`, `time`),
+    	KEY `ix_status_time` (`status`, `time`),
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `group_label` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-    `alert_group_id` INT NOT NULL,
-    `group_label` VARCHAR(100) NOT NULL,
-    `value` VARCHAR(1000) NOT NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    	`alert_group_id` INT NOT NULL,
+    	`group_label` VARCHAR(100) NOT NULL,
+    	`value` VARCHAR(1000) NOT NULL,
+    	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `common_label` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-    `alert_group_id` INT NOT NULL,
-    `label` VARCHAR(100) NOT NULL,
-    `value` VARCHAR(1000) NOT NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    	`alert_group_id` INT NOT NULL,
+    	`label` VARCHAR(100) NOT NULL,
+    	`value` VARCHAR(1000) NOT NULL,
+    	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `common_annotation` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-    `alert_group_id` INT NOT NULL,
-    `annotation` VARCHAR(100) NOT NULL,
-    `value` VARCHAR(1000) NOT NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    	`alert_group_id` INT NOT NULL,
+    	`annotation` VARCHAR(100) NOT NULL,
+    	`value` VARCHAR(1000) NOT NULL,
+    	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `alert` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-    `alert_group_id` INT NOT NULL,
+    	`alert_group_id` INT NOT NULL,
 	`status` VARCHAR(50) NOT NULL,
-    `starts_at` DATETIME NOT NULL,
-    `ends_at` DATETIME DEFAULT NULL,
+    	`starts_at` DATETIME NOT NULL,
+    	`ends_at` DATETIME DEFAULT NULL,
 	`generator_url` TEXT NOT NULL,
 	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
@@ -59,18 +59,18 @@ CREATE TABLE `alert` (
 
 CREATE TABLE `alert_label` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-    `alert_id` INT NOT NULL,
-    `label` VARCHAR(100) NOT NULL,
-    `value` VARCHAR(1000) NOT NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    	`alert_id` INT NOT NULL,
+    	`label` VARCHAR(100) NOT NULL,
+    	`value` VARCHAR(1000) NOT NULL,
+    	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `alert_annotation` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-    `alert_id` INT NOT NULL,
-    `annotation` VARCHAR(100) NOT NULL,
-    `value` VARCHAR(1000) NOT NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    	`alert_id` INT NOT NULL,
+    	`annotation` VARCHAR(100) NOT NULL,
+    	`value` VARCHAR(1000) NOT NULL,
+    	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 );
