@@ -3,7 +3,7 @@ CREATE TABLE `model` (
   `version` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
-INSERT INTO `model` (`version`) VALUES ("0.0.1");
+INSERT INTO `model` (`version`) VALUES ("1.0.0");
 
 -- Create the rest of the tables
 CREATE TABLE `alert_group` (
