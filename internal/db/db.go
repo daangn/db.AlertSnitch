@@ -7,7 +7,8 @@ import (
 )
 
 // SupportedModel stores the model that is supported by this application
-const SupportedModel = "0.1.0"
+// daangn use 1.0.0 Ver
+const SupportedModel = "1.0.0"
 
 // ConnectionArgs required to create a MySQL connection
 type ConnectionArgs struct {
