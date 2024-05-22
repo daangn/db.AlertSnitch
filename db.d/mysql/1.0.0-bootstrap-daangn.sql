@@ -53,6 +53,7 @@ CREATE TABLE `alert` (
     	`starts_at` DATETIME NOT NULL,
     	`ends_at` DATETIME DEFAULT NULL,
 	`generator_url` TEXT NOT NULL,
+	`fingerprint` TEXT NOT NULL,
 	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 );
