@@ -9,9 +9,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"gitlab.com/yakshaving.art/alertsnitch/internal"
-	"gitlab.com/yakshaving.art/alertsnitch/internal/metrics"
-	"gitlab.com/yakshaving.art/alertsnitch/internal/webhook"
+	"github.com/daangn/db.AlertSnitch/internal"
+	"github.com/daangn/db.AlertSnitch/internal/metrics"
+	"github.com/daangn/db.AlertSnitch/internal/webhook"
 )
 
 // SupportedWebhookVersion is the alert webhook data version that is supported

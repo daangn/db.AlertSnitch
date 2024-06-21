@@ -3,7 +3,7 @@ package version_test
 import (
 	"testing"
 
-	"gitlab.com/yakshaving.art/alertsnitch/version"
+	"github.com/daangn/db.AlertSnitch/version"
 )
 
 func TestVersionString(t *testing.T) {

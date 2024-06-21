@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package db_test
@@ -12,9 +13,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gitlab.com/yakshaving.art/alertsnitch/internal"
-	"gitlab.com/yakshaving.art/alertsnitch/internal/db"
-	"gitlab.com/yakshaving.art/alertsnitch/internal/webhook"
+	"github.com/daangn/db.AlertSnitch/internal"
+	"github.com/daangn/db.AlertSnitch/internal/db"
+	"github.com/daangn/db.AlertSnitch/internal/webhook"
 )
 
 func TestPingingDatabaseWorks(t *testing.T) {

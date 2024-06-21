@@ -57,9 +57,9 @@ integration: ### run integration tests (requires a bootstrapped local environmen
 .PHONY: build
 build: ### build the binary applying the correct version from git
 	@GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags "-X \
-		gitlab.com/yakshaving.art/alertsnitch/version.Version=$(VERSION) -X \
-		gitlab.com/yakshaving.art/alertsnitch/version.Commit=$(COMMIT_ID) -X \
-		gitlab.com/yakshaving.art/alertsnitch/version.Date=$(COMMIT_DATE)" \
+		github.com/daangn/db.AlertSnitch/version.Version=$(VERSION) -X \
+		github.com/daangn/db.AlertSnitch/version.Commit=$(COMMIT_ID) -X \
+		github.com/daangn/db.AlertSnitch/version.Date=$(COMMIT_DATE)" \
 		-o alertsnitch-$(GOARCH)
 
 CURRENT_DIR:=$(shell pwd)

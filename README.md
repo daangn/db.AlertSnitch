@@ -30,7 +30,7 @@ graph TD
 Simply install to your $GOPATH using your GO tools
 
 ```sh
-$ go get gitlab.com/yakshaving.art/alertsnitch`
+$ go get github.com/daangn/db.AlertSnitch`
 ```
 
 ## Requirements
@@ -74,7 +74,7 @@ $ docker run --rm \
     -p 9567:9567 \
     -e ALERTSNITCH_DSN \
     -e ALERTSNITCH_BACKEND \
-    registry.gitlab.com/yakshaving.art/alertsnitch
+    registry.github.com/daangn/db.AlertSnitch
 ```
 
 ### Running Manually
@@ -82,7 +82,7 @@ $ docker run --rm \
 1. Open a terminal and run the following
 1. Copy the AlertSnitch binary from your $GOPATH to `/usr/local/bin` with `sudo cp ~/go/bin/alertsnitch /usr/local/bin`
 1. Now run AlertSnitch as with just `alertsnitch`
-   - To just see the alerts that are being received, use the *null* backend with `ALERTSNITCH_BACKEND=null`
+   - To just see the alerts that are being received, use the _null_ backend with `ALERTSNITCH_BACKEND=null`
 
 ### Setting up in AlertManager
 
@@ -92,9 +92,9 @@ forward every alert to it on the `/webhooks` path.
 ```yaml
 ---
 receivers:
-- name: alertsnitch
-  webhook_configs:
-    - url: http://<alertsnitch-host-or-ip>:9567/webhook
+  - name: alertsnitch
+    webhook_configs:
+      - url: http://<alertsnitch-host-or-ip>:9567/webhook
 ```
 
 Then add the route
@@ -104,22 +104,22 @@ Then add the route
 # appropiate handler.
 route:
   routes:
-  - receiver: alertsnitch
-    continue: true
+    - receiver: alertsnitch
+      continue: true
 ```
 
 ### Command line arguments
 
-* **-database-backend** sets the database backend to connect to, supported are `mysql`, `postgres` and `null`
-* **-debug** dumps the received WebHook payloads to the log so you can understand what is going on
-* **-listen.address** _string_ address in which to listen for HTTP requests (default ":9567")
-* **-version** prints the version and exit
+- **-database-backend** sets the database backend to connect to, supported are `mysql`, `postgres` and `null`
+- **-debug** dumps the received WebHook payloads to the log so you can understand what is going on
+- **-listen.address** _string_ address in which to listen for HTTP requests (default ":9567")
+- **-version** prints the version and exit
 
 ### Environment variables
 
-- **ALERTSNITCH_DSN** *required* database connection query string
+- **ALERTSNITCH_DSN** _required_ database connection query string
 - **ALERTSNITCH_ADDR** same as **-listen.address**
-- **ALERTSNITCH_BACKEND**  same as **-database-backend**
+- **ALERTSNITCH_BACKEND** same as **-database-backend**
 
 ### Readiness probe
 
