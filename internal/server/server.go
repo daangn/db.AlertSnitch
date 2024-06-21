@@ -16,7 +16,8 @@ import (
 
 // SupportedWebhookVersion is the alert webhook data version that is supported
 // by this app
-const SupportedWebhookVersion = "4"
+const SupportedWebhookVersion = "1"
+//const SupportedWebhookVersion = "4"
 
 // Server represents a web server that processes webhooks
 type Server struct {
