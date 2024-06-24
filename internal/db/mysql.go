@@ -51,39 +51,39 @@ func connectMySQL(args ConnectionArgs) (*MySQLDB, error) {
 func (d MySQLDB) Save(data *internal.AlertGroup) error {
 	return d.unitOfWork(func(tx *sql.Tx) error {
 		r, err := tx.Exec(`
-			INSERT INTO AlertGroup (time, receiver, status, externalURL, groupKey)
+			INSERT INTO alert_group (time, receiver, status, external_url, group_key)
 			VALUES (now(), ?, ?, ?, ?)`, data.Receiver, data.Status, data.ExternalURL, data.GroupKey)
 		if err != nil {
-			return fmt.Errorf("failed to insert into AlertGroups: %s", err)
+			return fmt.Errorf("failed to insert into alert_groups: %s", err)
 		}
 
 		alertGroupID, err := r.LastInsertId() // alertGroupID
 		if err != nil {
-			return fmt.Errorf("failed to get AlertGroups inserted id: %s", err)
+			return fmt.Errorf("failed to get alert_groups inserted id: %s", err)
 		}
 
 		for k, v := range data.GroupLabels {
 			_, err := tx.Exec(`
-				INSERT INTO GroupLabel (alertGroupID, GroupLabel, Value)
+				INSERT INTO group_label (alert_group_id, group_label, value)
 				VALUES (?, ?, ?)`, alertGroupID, k, v)
 			if err != nil {
-				return fmt.Errorf("failed to insert into GroupLabel: %s", err)
+				return fmt.Errorf("failed to insert into group_label: %s", err)
 			}
 		}
 		for k, v := range data.CommonLabels {
 			_, err := tx.Exec(`
-				INSERT INTO CommonLabel (alertGroupID, Label, Value)
+				INSERT INTO common_label (alert_group_id, label, value)
 				VALUES (?, ?, ?)`, alertGroupID, k, v)
 			if err != nil {
-				return fmt.Errorf("failed to insert into CommonLabel: %s", err)
+				return fmt.Errorf("failed to insert into common_label: %s", err)
 			}
 		}
 		for k, v := range data.CommonAnnotations {
 			_, err := tx.Exec(`
-				INSERT INTO CommonAnnotation (alertGroupID, Annotation, Value)
+				INSERT INTO common_annotation (alert_group_id, annotation, value)
 				VALUES (?, ?, ?)`, alertGroupID, k, v)
 			if err != nil {
-				return fmt.Errorf("failed to insert into CommonAnnotation: %s", err)
+				return fmt.Errorf("failed to insert into common_annotation: %s", err)
 			}
 		}
 
@@ -91,38 +91,38 @@ func (d MySQLDB) Save(data *internal.AlertGroup) error {
 			var result sql.Result
 			if alert.EndsAt.Before(alert.StartsAt) {
 				result, err = tx.Exec(`
-				INSERT INTO Alert (alertGroupID, status, startsAt, generatorURL, fingerprint)
+				INSERT INTO alert (alert_group_id, status, starts_at, generator_url, fingerprint)
 				VALUES (?, ?, ?, ?, ?)`,
 					alertGroupID, alert.Status, alert.StartsAt, alert.GeneratorURL, alert.Fingerprint)
 			} else {
 				result, err = tx.Exec(`
-				INSERT INTO Alert (alertGroupID, status, startsAt, endsAt, generatorURL, fingerprint)
+				INSERT INTO alert (alert_group_id, status, starts_at, ends_at, generator_url, fingerprint)
 				VALUES (?, ?, ?, ?, ?, ?)`,
 					alertGroupID, alert.Status, alert.StartsAt, alert.EndsAt, alert.GeneratorURL, alert.Fingerprint)
 			}
 			if err != nil {
-				return fmt.Errorf("failed to insert into Alert: %s", err)
+				return fmt.Errorf("failed to insert into alert: %s", err)
 			}
 
 			alertID, err := result.LastInsertId()
 			if err != nil {
-				return fmt.Errorf("failed to get Alert inserted id: %s", err)
+				return fmt.Errorf("failed to get alert inserted id: %s", err)
 			}
 
 			for k, v := range alert.Labels {
 				_, err := tx.Exec(`
-					INSERT INTO AlertLabel (AlertID, Label, Value)
+					INSERT INTO alert_label (alert_id, label, value)
 					VALUES (?, ?, ?)`, alertID, k, v)
 				if err != nil {
-					return fmt.Errorf("failed to insert into AlertLabel: %s", err)
+					return fmt.Errorf("failed to insert into alert_label: %s", err)
 				}
 			}
 			for k, v := range alert.Annotations {
 				_, err := tx.Exec(`
-					INSERT INTO AlertAnnotation (AlertID, Annotation, Value)
+					INSERT INTO alert_annotation (alert_id, annotation, value)
 					VALUES (?, ?, ?)`, alertID, k, v)
 				if err != nil {
-					return fmt.Errorf("failed to insert into AlertAnnotation: %s", err)
+					return fmt.Errorf("failed to insert into alert_annotation: %s", err)
 				}
 			}
 		}
