@@ -1,4 +1,4 @@
-module db.AlertSnitch
+module github.com/daangn/db.AlertSnitch
 
 go 1.19
 
