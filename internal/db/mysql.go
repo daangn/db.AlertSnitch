@@ -171,7 +171,7 @@ func (d MySQLDB) Ping() error {
 
 // CheckModel implements Storer interface
 func (d MySQLDB) CheckModel() error {
-	rows, err := d.db.Query("SELECT version FROM Model")
+	rows, err := d.db.Query("SELECT version FROM model")
 	if err != nil {
 		return fmt.Errorf("failed to fetch model version from the database: %s", err)
 	}
