@@ -1,75 +1,70 @@
-CREATE TABLE `Model` (
+CREATE TABLE `model` (
   `id` enum('1') NOT NULL,
   `version` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
-INSERT INTO `Model` (`version`) VALUES ("1.0.0");
+INSERT INTO `model` (`version`) VALUES ("1.0.0");
 
 -- Create the rest of the tables
-CREATE TABLE `AlertGroup` (
-	`ID` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `alert_group` (
+	`id` INT NOT NULL AUTO_INCREMENT,
 	`time` TIMESTAMP NOT NULL,
 	`receiver` VARCHAR(100) NOT NULL,
 	`status` VARCHAR(50) NOT NULL,
-	`externalURL` TEXT NOT NULL,
-	`groupKey` VARCHAR(255) NOT NULL,
-	KEY `idx_time` (`time`) USING BTREE,
-    KEY `idx_status_ts` (`status`, `time`) USING BTREE,
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	`external_url` TEXT NOT NULL,
+	`group_key` VARCHAR(255) NOT NULL,
+	KEY `ix_time` (`time`),
+        KEY `ix_status_time` (`status`, `time`),
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `GroupLabel` (
-	`ID` INT NOT NULL AUTO_INCREMENT,
-    `AlertGroupID` INT NOT NULL,
-    `GroupLabel` VARCHAR(100) NOT NULL,
-    `Value` VARCHAR(1000) NOT NULL,
-    FOREIGN KEY (AlertGroupID) REFERENCES AlertGroup (ID) ON DELETE CASCADE,
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `group_label` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+        `alert_group_id` INT NOT NULL,
+        `group_label` VARCHAR(100) NOT NULL,
+        `value` VARCHAR(1000) NOT NULL,     
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `CommonLabel` (
-	`ID` INT NOT NULL AUTO_INCREMENT,
-    `AlertGroupID` INT NOT NULL,
-    `Label` VARCHAR(100) NOT NULL,
-    `Value` VARCHAR(1000) NOT NULL,
-    FOREIGN KEY (AlertGroupID) REFERENCES AlertGroup (ID) ON DELETE CASCADE,
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `common_label` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+        `alert_group_id` INT NOT NULL,
+        `label` VARCHAR(100) NOT NULL,
+        `value` VARCHAR(1000) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `CommonAnnotation` (
-	`ID` INT NOT NULL AUTO_INCREMENT,
-    `AlertGroupID` INT NOT NULL,
-    `Annotation` VARCHAR(100) NOT NULL,
-    `Value` VARCHAR(1000) NOT NULL,
-    FOREIGN KEY (AlertGroupID) REFERENCES AlertGroup (ID) ON DELETE CASCADE,
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `common_annotation` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+        `alert_group_id` INT NOT NULL,
+        `annotation` VARCHAR(100) NOT NULL,
+        `value` VARCHAR(1000) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `Alert` (
-	`ID` INT NOT NULL AUTO_INCREMENT,
-    `alertGroupID` INT NOT NULL,
+CREATE TABLE `alert` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+        `alert_group_id` INT NOT NULL,
 	`status` VARCHAR(50) NOT NULL,
-    `startsAt` DATETIME NOT NULL,
-    `endsAt` DATETIME DEFAULT NULL,
-	`generatorURL` TEXT NOT NULL,
-    FOREIGN KEY (alertGroupID) REFERENCES AlertGroup (ID) ON DELETE CASCADE,
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        `starts_at` DATETIME NOT NULL,
+        `ends_at` DATETIME DEFAULT NULL,
+	`generator_url` TEXT NOT NULL,
+	`fingerprint` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `AlertLabel` (
-	`ID` INT NOT NULL AUTO_INCREMENT,
-    `AlertID` INT NOT NULL,
-    `Label` VARCHAR(100) NOT NULL,
-    `Value` VARCHAR(1000) NOT NULL,
-    FOREIGN KEY (AlertID) REFERENCES Alert (ID) ON DELETE CASCADE,
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `alert_label` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+        `alert_id` INT NOT NULL,
+        `label` VARCHAR(100) NOT NULL,
+        `value` VARCHAR(1000) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `AlertAnnotation` (
-	`ID` INT NOT NULL AUTO_INCREMENT,
-    `AlertID` INT NOT NULL,
-    `Annotation` VARCHAR(100) NOT NULL,
-    `Value` VARCHAR(1000) NOT NULL,
-    FOREIGN KEY (AlertID) REFERENCES Alert (ID) ON DELETE CASCADE,
-	PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `alert_annotation` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+        `alert_id` INT NOT NULL,
+    	`annotation` VARCHAR(100) NOT NULL,
+    	`value` VARCHAR(1000) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
