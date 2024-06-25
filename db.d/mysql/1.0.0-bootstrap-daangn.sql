@@ -13,6 +13,7 @@ CREATE TABLE `alert_group` (
 	`status` VARCHAR(50) NOT NULL,
 	`external_url` TEXT NOT NULL,
 	`group_key` VARCHAR(255) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMSTAMP(),
 	KEY `ix_time` (`time`),
         KEY `ix_status_time` (`status`, `time`),
 	PRIMARY KEY (`id`)
@@ -22,7 +23,8 @@ CREATE TABLE `group_label` (
 	`id` INT NOT NULL AUTO_INCREMENT,
         `alert_group_id` INT NOT NULL,
         `group_label` VARCHAR(100) NOT NULL,
-        `value` VARCHAR(1000) NOT NULL,     
+        `value` VARCHAR(1000) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMSTAMP(),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -31,6 +33,7 @@ CREATE TABLE `common_label` (
         `alert_group_id` INT NOT NULL,
         `label` VARCHAR(100) NOT NULL,
         `value` VARCHAR(1000) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMSTAMP(),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -39,6 +42,7 @@ CREATE TABLE `common_annotation` (
         `alert_group_id` INT NOT NULL,
         `annotation` VARCHAR(100) NOT NULL,
         `value` VARCHAR(1000) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMSTAMP(),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -50,6 +54,7 @@ CREATE TABLE `alert` (
         `ends_at` DATETIME DEFAULT NULL,
 	`generator_url` TEXT NOT NULL,
 	`fingerprint` VARCHAR(20) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMSTAMP(),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -58,6 +63,7 @@ CREATE TABLE `alert_label` (
         `alert_id` INT NOT NULL,
         `label` VARCHAR(100) NOT NULL,
         `value` VARCHAR(1000) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMSTAMP(),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -66,5 +72,6 @@ CREATE TABLE `alert_annotation` (
         `alert_id` INT NOT NULL,
     	`annotation` VARCHAR(100) NOT NULL,
     	`value` VARCHAR(1000) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMSTAMP(),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
